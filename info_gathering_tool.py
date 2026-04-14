@@ -1,5 +1,5 @@
 
-# @authors: Fionn Finane and Aaqib Khan
+# @authors: Fionn Finane
 # This code is an information gathering tool that provides various functionalities such as DNS reconnaissance, Shodan hacking, and network reconnaissance.
 from shodan import Shodan
 # The Shodan module is imported to allow the tool to interact with the Shodan API for performing reconnaissance tasks related to internet-connected devices and services.
