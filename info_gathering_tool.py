@@ -28,7 +28,7 @@ System_version = platform.uname()
 # This variable is used to control the flow of the program and determine when to exit the loop based on user input.
 iterate = 0
 # This allows us to interact with the Shodan API and perform various reconnaissance tasks related to internet-connected devices and services.
-api = Shodan("FT3HP85YXqbja1NRPsDYol0orWpua313")  # Replace with your actual Shodan API key
+api = Shodan("your_Shodan_API_Key")  # Replace with your actual Shodan API key
 # The 'resolve_all_ips' function takes a target (which can be a hostname or an IP address) as input and attempts to resolve all associated IP addresses, categorizing them as public or private and as IPv4 or IPv6.
 # It returns a dictionary containing the resolved IP addresses and the first IP address found, which can be used for further reconnaissance tasks.
 def resolve_all_ips(target):
