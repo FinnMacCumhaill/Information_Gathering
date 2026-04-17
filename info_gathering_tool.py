@@ -118,7 +118,6 @@ class ShodanHostDetailsParser:
         fingerprints = set()
         pubkeys = set()
         services = set()
-        vulnerabilities = set()
 
         # ---------- Parse services ----------
         # We iterate through the services associated with the IP address, extracting relevant information about each service,
@@ -189,19 +188,10 @@ class ShodanHostDetailsParser:
                 )
             else:
                 pubkeys.add("No public key information available.")
-                
-            # Vulnerabilities
-            vulns = cert.get("vulns", [])
-            for v in vulns:
-                vulnerabilities.add(v)
-            if vulns:
-                vulnerabilities.update(vulns)
-            else:
-                vulnerabilities.add("No vulnerabilities detected or no vulnerability information available.")
 
         # Print details
         # We print various details about the IP address, such as the organization, operating system, last update, number of open ports,
-        # vulnerabilities, hostnames, ISP, city, country, latitude, longitude, ASN, certificates, and encryption algorithms.
+        # hostnames, ISP, city, country, latitude, longitude, ASN, certificates, and encryption algorithms.
         # This information provides valuable insights into the target's network and security posture, allowing for further analysis and potential exploitation.
         # The program is designed to be user-friendly and informative, providing clear instructions and feedback to the user throughout the process.
         # We ensure that the user is aware of the available information and encourage them to use it for further reconnaissance and analysis.
@@ -250,13 +240,6 @@ class ShodanHostDetailsParser:
         else:
             for f in fingerprints:
                 print(f"  {f}")
-
-        print ("\n--- Vulnerabilities ---")
-        if not vulnerabilities:
-            print("No Vulnerabilities detected or no vulnerability information available.")
-        else:
-            for v in vulnerabilities:
-                print(f"  {v}")
 
 # The main loop for the information gathering tool presents a menu to the user and executes the corresponding actions based on the user's choice.
 # It allows the user to perform DNS reconnaissance, Shodan hacking, or network reconnaissance by selecting the appropriate option from the menu.
