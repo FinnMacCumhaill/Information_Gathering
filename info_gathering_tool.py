@@ -1,5 +1,4 @@
-
-# @authors: Fionn Finane
+# @authors: Fionn Finane and Aaqib Khan
 # This code is an information gathering tool that provides various functionalities such as DNS reconnaissance, Shodan hacking, and network reconnaissance.
 from shodan import Shodan
 # The Shodan module is imported to allow the tool to interact with the Shodan API for performing reconnaissance tasks related to internet-connected devices and services.
@@ -28,7 +27,7 @@ System_version = platform.uname()
 # This variable is used to control the flow of the program and determine when to exit the loop based on user input.
 iterate = 0
 # This allows us to interact with the Shodan API and perform various reconnaissance tasks related to internet-connected devices and services.
-api = Shodan("your_Shodan_API_Key")  # Replace with your actual Shodan API key
+api = Shodan("YOUR_SHODAN_API_KEY")  # Replace with your actual Shodan API key
 # The 'resolve_all_ips' function takes a target (which can be a hostname or an IP address) as input and attempts to resolve all associated IP addresses, categorizing them as public or private and as IPv4 or IPv6.
 # It returns a dictionary containing the resolved IP addresses and the first IP address found, which can be used for further reconnaissance tasks.
 def resolve_all_ips(target):
@@ -54,7 +53,6 @@ def resolve_all_ips(target):
 
     except ValueError:
         # CASE 2: Hostname
-
         # Resolve IPv4 addresses
         try:
             for result in socket.getaddrinfo(target, None, socket.AF_INET):
@@ -142,8 +140,9 @@ class ShodanHostDetailsParser:
                 print(f"\n--- SSL/TLS Service on port {port} ---")
 
             # SSL Versions
-            for v in ssl.get("versions", []):
-                ssl_versions.add(v)
+            if ssl.get("versions") != None:
+                for v in ssl.get("versions", []):
+                    ssl_versions.add(v)
             else:
                 print("No SSL/TLS versions detected or no SSL version information available.")
 
@@ -188,10 +187,11 @@ class ShodanHostDetailsParser:
                 )
             else:
                 pubkeys.add("No public key information available.")
+                
 
         # Print details
         # We print various details about the IP address, such as the organization, operating system, last update, number of open ports,
-        # hostnames, ISP, city, country, latitude, longitude, ASN, certificates, and encryption algorithms.
+        # vulnerabilities, hostnames, ISP, city, country, latitude, longitude, ASN, certificates, and encryption algorithms.
         # This information provides valuable insights into the target's network and security posture, allowing for further analysis and potential exploitation.
         # The program is designed to be user-friendly and informative, providing clear instructions and feedback to the user throughout the process.
         # We ensure that the user is aware of the available information and encourage them to use it for further reconnaissance and analysis.
@@ -268,6 +268,8 @@ if __name__ == "__main__":
             print("\n-----------------------------------------\n")
             print("\tDNS Reconaissance\t")
             print("\n-----------------------------------------\n")
+            print(f"\n{System_version.system} Operating System Detected!!!!\n")
+            print("\n-----------------------------------------\n")
             # We prompt the user to enter their target for DNS reconnaissance.
             # The input is stored in the variable 'target' for later use in executing the appropriate commands based on the user's operating system.
             # This allows the user to easily specify the target they want to gather DNS information about, providing a seamless and interactive experience for performing DNS reconnaissance tasks.
@@ -313,7 +315,7 @@ if __name__ == "__main__":
             # We ensure that the user is aware of the available options and provide clear instructions on how to use them for optimal results.
             # The program is designed to be user-friendly and informative, providing clear instructions and feedback to the user throughout the process.
             elif (System_version.system == "Linux"):
-                choice = input(f"Which tool do you want to utilise in Linux? (DIG or WHOIS): ")
+                choice = input(f"Which tool do you want to use? (DIG or WHOIS): ")
                 choice = choice.upper()  # Convert user input to uppercase for easier comparison
 
                 if (choice == "DIG"):
@@ -408,28 +410,18 @@ if __name__ == "__main__":
             # such as testing connectivity, performing traceroutes, or analyzing network interfaces.
             # The program is designed to be user-friendly and informative, providing clear instructions and feedback to the user throughout the process.
             print("\n-----------------------------------------\n")
-            print("\tIP Information")
+            print("\t Target's IP Address Information")
             print("\n-----------------------------------------\n")
-
-            if public_ipv4:
-                print(f"\tPublic IPv4: {public_ipv4}\n")
+            if ip_address == private_ipv4:
+                print(f"IPv4 Private Address: {private_ipv4}")
+            elif ip_address == private_ipv6:
+                print(f"IPv6 Private Address: {private_ipv6}")
+            elif ip_address == public_ipv4:
+                print(f"IPv4 Public Address: {public_ipv4}")
+            elif ip_address == private_ipv6:
+                print(f"IPv6 Public Address: {public_ipv6}")
             else:
-                print("\tNo Public IPv4 address found.\n")
-
-            if private_ipv4:
-                print(f"\tPrivate IPv4: {private_ipv4}\n")
-            else:
-                print("\tNo Private IPv4 address found.\n")
-
-            if public_ipv6:
-                print(f"\tPublic IPv6: {public_ipv6}\n")
-            else:
-                print("\tNo Public IPv6 address found.\n")
-
-            if private_ipv6:
-                print(f"\tPrivate IPv6: {private_ipv6}")
-            else:
-                print("\tNo Private IPv6 address found.")
+                print ("No IP information Details were found !!!! ")
 
             print("\n-----------------------------------------\n")
 
@@ -547,5 +539,3 @@ if __name__ == "__main__":
             print ("\n-----------------------------------------\n")
             break
         iterate +=1
-
- 
